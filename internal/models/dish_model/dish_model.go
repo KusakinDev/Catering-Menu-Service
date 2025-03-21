@@ -8,7 +8,7 @@ import (
 
 type Dish struct {
 	Id              int    `gorm:"primaryKey;autoIncrement"`
-	Name            string `gorm:"type:varchar(30)"`
+	Name            string `gorm:"type:varchar(50)"`
 	TypeId          int    `gorm:"not null"`
 	CategoryId      int    `gorm:"not null"`
 	NutritionFactId int    `gorm:"not null"`

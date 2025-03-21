@@ -6,20 +6,20 @@ import (
 	"github.com/KusakinDev/Catering-Menu-Service/internal/database"
 )
 
-type Nutrition_fact struct {
-	Id            int
-	Calories      float32
-	Proteins      float32
-	Fats          float32
-	Carbohydrates float32
+type NutritionFact struct {
+	Id            int     `gorm:"primaryKey;autoIncrement"`
+	Calories      float32 `gorm:"type:real"`
+	Proteins      float32 `gorm:"type:real"`
+	Fats          float32 `gorm:"type:real"`
+	Carbohydrates float32 `gorm:"type:real"`
 }
 
-func (nutFuct *Nutrition_fact) MigrateToDB(db database.DataBase) error {
-	err := db.Connection.AutoMigrate(&Nutrition_fact{})
+func (nutFuct *NutritionFact) MigrateToDB(db database.DataBase) error {
+	err := db.Connection.AutoMigrate(&NutritionFact{})
 	if err != nil {
-		log.Println("Error migrate Nutrition_fact model :")
+		log.Println("Error migrate NutritionFact model :")
 		return err
 	}
-	log.Println("Success migrate Nutrition_fact model :")
+	log.Println("Success migrate NutritionFact model :")
 	return nil
 }

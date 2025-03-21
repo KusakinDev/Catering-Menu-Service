@@ -8,7 +8,7 @@ import (
 
 type AllergyType struct {
 	Id   int    `gorm:"primaryKey;autoIncrement"`
-	Type string `gorm:"type:varchar(20)"`
+	Type string `gorm:"type:varchar(50)"`
 }
 
 func (all_type *AllergyType) MigrateToDB(db database.DataBase) error {

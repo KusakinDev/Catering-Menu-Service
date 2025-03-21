@@ -8,7 +8,7 @@ import (
 
 type Type struct {
 	Id       int    `gorm:"primaryKey;autoIncrement"`
-	TypeDish string `gorm:"type:varchar(20)"`
+	TypeDish string `gorm:"type:varchar(50)"`
 }
 
 func (typ *Type) MigrateToDB(db database.DataBase) error {
