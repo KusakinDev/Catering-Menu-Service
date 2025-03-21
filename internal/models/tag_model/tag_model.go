@@ -7,8 +7,8 @@ import (
 )
 
 type Tag struct {
-	Id       int    `gorm:"primaryKey;autoIncrement"`
-	Tag_dish string `gorm:"type:varchar(20)"`
+	Id      int    `gorm:"primaryKey;autoIncrement"`
+	TagDish string `gorm:"type:varchar(20)"`
 }
 
 func (tag *Tag) MigrateToDB(db database.DataBase) error {

@@ -14,7 +14,7 @@ type Nutrition_fact struct {
 	Carbohydrates float32
 }
 
-func (nut_fuct *Nutrition_fact) MigrateToDB(db database.DataBase) error {
+func (nutFuct *Nutrition_fact) MigrateToDB(db database.DataBase) error {
 	err := db.Connection.AutoMigrate(&Nutrition_fact{})
 	if err != nil {
 		log.Println("Error migrate Nutrition_fact model :")
