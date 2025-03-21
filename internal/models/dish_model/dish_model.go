@@ -1,9 +1,8 @@
 package dishmodel
 
 import (
-	"log"
-
 	"github.com/KusakinDev/Catering-Menu-Service/internal/database"
+	"github.com/sirupsen/logrus"
 )
 
 type Dish struct {
@@ -19,9 +18,9 @@ type Dish struct {
 func (dish *Dish) MigrateToDB(db database.DataBase) error {
 	err := db.Connection.AutoMigrate(&Dish{})
 	if err != nil {
-		log.Println("Error migrate Dish model :")
+		logrus.Errorln("Error migrate Dish model :")
 		return err
 	}
-	log.Println("Success migrate Dish model :")
+	logrus.Infoln("Success migrate Dish model :")
 	return nil
 }

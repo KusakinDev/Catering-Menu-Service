@@ -1,9 +1,8 @@
 package typemodel
 
 import (
-	"log"
-
 	"github.com/KusakinDev/Catering-Menu-Service/internal/database"
+	"github.com/sirupsen/logrus"
 )
 
 type Type struct {
@@ -14,9 +13,9 @@ type Type struct {
 func (typ *Type) MigrateToDB(db database.DataBase) error {
 	err := db.Connection.AutoMigrate(&Type{})
 	if err != nil {
-		log.Println("Error migrate Type model :")
+		logrus.Errorln("Error migrate Type model :")
 		return err
 	}
-	log.Println("Success migrate Type model :")
+	logrus.Infoln("Success migrate Type model :")
 	return nil
 }

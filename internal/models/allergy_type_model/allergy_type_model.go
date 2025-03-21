@@ -1,9 +1,8 @@
 package allergytypemodel
 
 import (
-	"log"
-
 	"github.com/KusakinDev/Catering-Menu-Service/internal/database"
+	"github.com/sirupsen/logrus"
 )
 
 type AllergyType struct {
@@ -14,9 +13,9 @@ type AllergyType struct {
 func (all_type *AllergyType) MigrateToDB(db database.DataBase) error {
 	err := db.Connection.AutoMigrate(&AllergyType{})
 	if err != nil {
-		log.Println("Error migrate Allergy_type model :")
+		logrus.Error("Error migrate AllergyType model :")
 		return err
 	}
-	log.Println("Success migrate Allergy_type model :")
+	logrus.Info("Success migrate AllergyType model :")
 	return nil
 }

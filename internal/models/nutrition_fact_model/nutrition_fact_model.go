@@ -1,9 +1,8 @@
 package nutritionfactmodel
 
 import (
-	"log"
-
 	"github.com/KusakinDev/Catering-Menu-Service/internal/database"
+	"github.com/sirupsen/logrus"
 )
 
 type NutritionFact struct {
@@ -17,9 +16,9 @@ type NutritionFact struct {
 func (nutFuct *NutritionFact) MigrateToDB(db database.DataBase) error {
 	err := db.Connection.AutoMigrate(&NutritionFact{})
 	if err != nil {
-		log.Println("Error migrate NutritionFact model :")
+		logrus.Errorln("Error migrate NutritionFact model :")
 		return err
 	}
-	log.Println("Success migrate NutritionFact model :")
+	logrus.Infoln("Success migrate NutritionFact model :")
 	return nil
 }

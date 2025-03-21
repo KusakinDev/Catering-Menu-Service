@@ -1,9 +1,8 @@
 package tagmodel
 
 import (
-	"log"
-
 	"github.com/KusakinDev/Catering-Menu-Service/internal/database"
+	"github.com/sirupsen/logrus"
 )
 
 type Tag struct {
@@ -14,9 +13,9 @@ type Tag struct {
 func (tag *Tag) MigrateToDB(db database.DataBase) error {
 	err := db.Connection.AutoMigrate(&Tag{})
 	if err != nil {
-		log.Println("Error migrate Tag model :")
+		logrus.Errorln("Error migrate Tag model :")
 		return err
 	}
-	log.Println("Success migrate Tag model :")
+	logrus.Infoln("Success migrate Tag model :")
 	return nil
 }

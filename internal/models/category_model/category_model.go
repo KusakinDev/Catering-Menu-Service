@@ -1,9 +1,8 @@
 package categorymodel
 
 import (
-	"log"
-
 	"github.com/KusakinDev/Catering-Menu-Service/internal/database"
+	"github.com/sirupsen/logrus"
 )
 
 type Category struct {
@@ -14,9 +13,9 @@ type Category struct {
 func (cat *Category) MigrateToDB(db database.DataBase) error {
 	err := db.Connection.AutoMigrate(&Category{})
 	if err != nil {
-		log.Println("Error migrate Category model :")
+		logrus.Errorln("Error migrate Category model :")
 		return err
 	}
-	log.Println("Success migrate Category model :")
+	logrus.Infoln("Success migrate Category model :")
 	return nil
 }
