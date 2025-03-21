@@ -24,6 +24,48 @@ type Dish struct {
 	Tag      tagmodel.Tag                     `gorm:"foreignKey:TagId;references:Id;constraint:OnUpdate:CASCADE,OnDelete:SET NULL;"`
 }
 
+func (dish *Dish) AddToTable() int {
+	var db database.DataBase
+	db.InitDB()
+
+	err := db.Connection.Create(&dish)
+	if err != nil {
+		db.CloseDB()
+		return 503
+	}
+
+	db.CloseDB()
+	return 200
+}
+
+func (dish *Dish) GetFromTableById() int {
+	var db database.DataBase
+	db.InitDB()
+
+	err := db.Connection.First(&dish)
+	if err != nil {
+		db.CloseDB()
+		return 503
+	}
+
+	db.CloseDB()
+	return 200
+}
+
+func (dish *Dish) GetFromTableByName() int {
+	var db database.DataBase
+	db.InitDB()
+
+	err := db.Connection.Where("name = ?", dish.Name).First(&dish)
+	if err != nil {
+		db.CloseDB()
+		return 503
+	}
+
+	db.CloseDB()
+	return 200
+}
+
 func (dish *Dish) MigrateToDB(db database.DataBase) error {
 	err := db.Connection.AutoMigrate(&Dish{})
 	if err != nil {
