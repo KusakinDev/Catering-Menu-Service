@@ -2,13 +2,16 @@ package allergymodel
 
 import (
 	"github.com/KusakinDev/Catering-Menu-Service/internal/database"
+	allergytypemodel "github.com/KusakinDev/Catering-Menu-Service/internal/models/allergy_type_model"
 	"github.com/sirupsen/logrus"
 )
 
 type Allergy struct {
-	Id              int `gorm:"primaryKey;autoIncrement"`
-	Dish_id         int `gorm:"not null"`
-	Allergy_type_id int `gorm:"not null"`
+	Id            int `gorm:"primaryKey;autoIncrement"`
+	DishId        int `gorm:"not null"`
+	AllergyTypeId int `gorm:"not null"`
+
+	AllergyType allergytypemodel.AllergyType `gorm:"foreignKey:AllergyTypeId;references:Id;constraint:OnUpdate:CASCADE,OnDelete:SET NULL;"`
 }
 
 func (all *Allergy) MigrateToDB(db database.DataBase) error {
