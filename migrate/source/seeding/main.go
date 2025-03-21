@@ -46,7 +46,7 @@ func main() {
         (400, 30, 20, 60),
         (100, 5, 1, 15);`,
 
-		`INSERT INTO dishes (name, type_id, category_id, nutrition_fact_id, tag_id, recipe) VALUES
+		`INSERT INTO dishes (name, type_id, category_id, nut_fact_id, tag_id, recipe) VALUES
 		('Томатный суп', 1, 1, 1, 2, 'Смешать помидоры, добавить специи и варить 30 минут.'),
 		('Куриное филе', 2, 3, 2, 1, 'Обжарить куриные филе до золотистой корочки с добавлением специй.'),
 		('Сырные палочки', 3, 2, 3, 4, 'Обвалять сыр в панировке и обжарить до румяности.'),
