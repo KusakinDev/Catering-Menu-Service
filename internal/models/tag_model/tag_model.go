@@ -1,6 +1,22 @@
 package tagmodel
 
+import (
+	"log"
+
+	"github.com/KusakinDev/Catering-Menu-Service/internal/database"
+)
+
 type Tag struct {
-	Id       int
-	Tag_dish string
+	Id       int    `gorm:"primaryKey;autoIncrement"`
+	Tag_dish string `gorm:"type:varchar(20)"`
+}
+
+func (tag *Tag) MigrateToDB(db database.DataBase) error {
+	err := db.Connection.AutoMigrate(&Tag{})
+	if err != nil {
+		log.Println("Error migrate Tag model :")
+		return err
+	}
+	log.Println("Success migrate Tag model :")
+	return nil
 }
