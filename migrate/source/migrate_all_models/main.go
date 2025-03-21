@@ -3,6 +3,7 @@ package main
 import (
 	"github.com/KusakinDev/Catering-Menu-Service/internal/database"
 	allergymodel "github.com/KusakinDev/Catering-Menu-Service/internal/models/allergy_model"
+	allergytypemodel "github.com/KusakinDev/Catering-Menu-Service/internal/models/allergy_type_model"
 	categorymodel "github.com/KusakinDev/Catering-Menu-Service/internal/models/category_model"
 	dishmodel "github.com/KusakinDev/Catering-Menu-Service/internal/models/dish_model"
 	tagmodel "github.com/KusakinDev/Catering-Menu-Service/internal/models/tag_model"
@@ -20,6 +21,9 @@ func main() {
 	var all allergymodel.Allergy
 	all.MigrateToDB(db)
 
+	var allType allergytypemodel.AllergyType
+	allType.MigrateToDB(db)
+
 	var cat categorymodel.Category
 	cat.MigrateToDB(db)
 
@@ -32,4 +36,5 @@ func main() {
 	var typ typemodel.Type
 	typ.MigrateToDB(db)
 
+	db.CloseDB()
 }
