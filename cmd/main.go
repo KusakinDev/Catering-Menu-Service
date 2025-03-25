@@ -10,16 +10,41 @@ package main
 
 import (
 	"log"
+	"net"
+
+	pb "github.com/KusakinDev/Catering-Menu-Service/internal/services/get_dish/get_dish_serv"
+	"github.com/KusakinDev/Catering-Menu-Service/internal/services/get_dish/server"
 
 	sw "github.com/KusakinDev/Catering-Menu-Service/internal/routes"
+	"google.golang.org/grpc"
 )
 
 func main() {
-	routes := sw.ApiHandleFunctions{}
+	// REST
+	go func() {
+		routes := sw.ApiHandleFunctions{}
+		log.Printf("REST server started on port :8080")
+		router := sw.NewRouter(routes)
+		if err := router.Run(":8080"); err != nil {
+			log.Fatalf("Failed to run REST server: %v", err)
+		}
+	}()
 
-	log.Printf("Server started")
+	// gRPC
+	go func() {
+		listener, err := net.Listen("tcp", ":50051")
+		if err != nil {
+			log.Fatalf("Failed to listen: %v", err)
+		}
 
-	router := sw.NewRouter(routes)
+		grpcServer := grpc.NewServer()
+		pb.RegisterDishServiceServer(grpcServer, &server.Server{})
 
-	log.Fatal(router.Run(":8080"))
+		log.Println("gRPC server is running on port :50051")
+		if err := grpcServer.Serve(listener); err != nil {
+			log.Fatalf("Failed to serve gRPC server: %v", err)
+		}
+	}()
+
+	select {}
 }
