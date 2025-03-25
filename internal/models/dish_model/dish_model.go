@@ -6,6 +6,7 @@ import (
 	nutritionfactmodel "github.com/KusakinDev/Catering-Menu-Service/internal/models/nutrition_fact_model"
 	tagmodel "github.com/KusakinDev/Catering-Menu-Service/internal/models/tag_model"
 	typemodel "github.com/KusakinDev/Catering-Menu-Service/internal/models/type_model"
+	pb "github.com/KusakinDev/Catering-Menu-Service/internal/services/get_dish/get_dish_serv"
 	"github.com/sirupsen/logrus"
 )
 
@@ -52,6 +53,26 @@ func (dish *Dish) GetFromTableById() int {
 	return 200
 }
 
+func (dish *Dish) GetAllFromTable() ([]Dish, int) {
+	var db database.DataBase
+	db.InitDB()
+
+	var dishes []Dish
+
+	err := db.Connection.
+		Preload("Type").
+		Preload("Category").
+		Preload("NutFuct").
+		Preload("Tag").
+		Find(&dishes).Error
+	if err != nil {
+		db.CloseDB()
+		return []Dish{}, 503
+	}
+	db.CloseDB()
+	return dishes, 200
+}
+
 func (dish *Dish) GetFromTableByName() int {
 	var db database.DataBase
 	db.InitDB()
@@ -74,4 +95,31 @@ func (dish *Dish) MigrateToDB(db database.DataBase) error {
 	}
 	logrus.Infoln("Success migrate Dish model :")
 	return nil
+}
+
+func (dish *Dish) ToGRPCDish() *pb.Dish {
+	return &pb.Dish{
+		Id:   int32(dish.Id),
+		Name: dish.Name,
+		Type: &pb.Type{
+			Id:       int32(dish.Type.Id),
+			TypeDish: dish.Type.TypeDish,
+		},
+		Category: &pb.Category{
+			Id:           int32(dish.Category.Id),
+			CategoryDish: dish.Category.CategoryDish,
+		},
+		NutFact: &pb.NutritionFact{
+			Id:            int32(dish.NutFuct.Id),
+			Calories:      dish.NutFuct.Calories,
+			Proteins:      dish.NutFuct.Proteins,
+			Fats:          dish.NutFuct.Fats,
+			Carbohydrates: dish.NutFuct.Carbohydrates,
+		},
+		Tag: &pb.Tag{
+			Id:      int32(dish.Tag.Id),
+			TagDish: dish.Tag.TagDish,
+		},
+		Recipe: dish.Recipe,
+	}
 }
