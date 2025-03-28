@@ -1,0 +1,48 @@
+openapi: 3.0.0
+info:
+  description: Menu service.
+  title: Catering service
+  version: 1.0.0
+servers:
+- url: /
+security:
+- BearerAuth: []
+paths:
+  /CreateDish:
+    post:
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/_create_dish_post_request'
+        required: true
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/_create_dish_post_200_response'
+          description: Success creating dish
+        "401":
+          description: Error creating dish
+      summary: Create new position in menu
+components:
+  schemas:
+    _create_dish_post_request:
+      properties:
+        name:
+          type: string
+        recipe:
+          type: string
+      type: object
+    _create_dish_post_200_response:
+      example:
+        message: message
+      properties:
+        message:
+          type: string
+      type: object
+  securitySchemes:
+    BearerAuth:
+      scheme: bearer
+      type: http
