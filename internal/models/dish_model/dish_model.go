@@ -7,6 +7,7 @@ import (
 	tagmodel "github.com/KusakinDev/Catering-Menu-Service/internal/models/tag_model"
 	typemodel "github.com/KusakinDev/Catering-Menu-Service/internal/models/type_model"
 	pb "github.com/KusakinDev/Catering-Menu-Service/internal/services/get_dish/get_dish_serv"
+	"github.com/gin-gonic/gin"
 	"github.com/sirupsen/logrus"
 )
 
@@ -21,17 +22,26 @@ type Dish struct {
 
 	Type     typemodel.Type                   `gorm:"foreignKey:TypeId;references:Id;constraint:OnUpdate:CASCADE,OnDelete:SET NULL;"`
 	Category categorymodel.Category           `gorm:"foreignKey:CategoryId;references:Id;constraint:OnUpdate:CASCADE,OnDelete:SET NULL;"`
-	NutFuct  nutritionfactmodel.NutritionFact `gorm:"foreignKey:NutFactId;references:Id;constraint:OnUpdate:CASCADE,OnDelete:SET NULL;"`
+	NutFuct  nutritionfactmodel.NutritionFact `json:"nut_fuct" gorm:"foreignKey:NutFactId;references:Id;constraint:OnUpdate:CASCADE,OnDelete:SET NULL;"`
 	Tag      tagmodel.Tag                     `gorm:"foreignKey:TagId;references:Id;constraint:OnUpdate:CASCADE,OnDelete:SET NULL;"`
+}
+
+func (dish *Dish) DecodeFromContext(c *gin.Context) error {
+	if err := c.ShouldBindJSON(&dish); err != nil {
+		logrus.Error("Error decode JSON: ", err)
+		return err
+	}
+	return nil
 }
 
 func (dish *Dish) AddToTable() int {
 	var db database.DataBase
 	db.InitDB()
 
-	err := db.Connection.Create(&dish)
+	err := db.Connection.Create(&dish).Error
 	if err != nil {
 		db.CloseDB()
+		logrus.Error("Error add to table: ", err)
 		return 503
 	}
 

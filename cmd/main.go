@@ -12,6 +12,7 @@ import (
 	"log"
 	"net"
 
+	loggerconfig "github.com/KusakinDev/Catering-Menu-Service/internal/config/logger"
 	pb "github.com/KusakinDev/Catering-Menu-Service/internal/services/get_dish/get_dish_serv"
 	"github.com/KusakinDev/Catering-Menu-Service/internal/services/get_dish/server"
 
@@ -20,6 +21,7 @@ import (
 )
 
 func main() {
+	loggerconfig.Init()
 	// REST
 	go func() {
 		routes := sw.ApiHandleFunctions{}

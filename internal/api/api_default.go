@@ -10,6 +10,7 @@
 package api
 
 import (
+	createdish "github.com/KusakinDev/Catering-Menu-Service/internal/handlers/create_dish"
 	"github.com/gin-gonic/gin"
 )
 
@@ -19,6 +20,8 @@ type DefaultAPI struct {
 // Post /CreateDish
 // Create new position in menu
 func (api *DefaultAPI) CreateDishPost(c *gin.Context) {
-	// Your handler implementation
-	c.JSON(200, gin.H{"status": "OK"})
+
+	code, message := createdish.CreateDish(c)
+
+	c.JSON(code, gin.H{"message": message})
 }
