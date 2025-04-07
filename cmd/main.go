@@ -25,9 +25,9 @@ func main() {
 	// REST
 	go func() {
 		routes := sw.ApiHandleFunctions{}
-		log.Printf("REST server started on port :8080")
+		log.Printf("REST server started on port :8081")
 		router := sw.NewRouter(routes)
-		if err := router.Run(":8080"); err != nil {
+		if err := router.Run(":8081"); err != nil {
 			log.Fatalf("Failed to run REST server: %v", err)
 		}
 	}()
