@@ -61,5 +61,8 @@ func CreateMenu(c *gin.Context) (int, string) {
 	history.AddAllToTable(historyLog)
 	logrus.Println("historyLog", historyLog)
 
+	resp := NotifNewMenu("http://localhost:8081/GetMenu")
+	logrus.Info(resp)
+
 	return 200, "Success create new menu"
 }
