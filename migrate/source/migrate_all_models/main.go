@@ -8,6 +8,8 @@ import (
 	allergytypemodel "github.com/KusakinDev/Catering-Menu-Service/internal/models/allergy_type_model"
 	categorymodel "github.com/KusakinDev/Catering-Menu-Service/internal/models/category_model"
 	dishmodel "github.com/KusakinDev/Catering-Menu-Service/internal/models/dish_model"
+	historymodel "github.com/KusakinDev/Catering-Menu-Service/internal/models/history_model"
+	menumodel "github.com/KusakinDev/Catering-Menu-Service/internal/models/menu_model"
 	nutritionfactmodel "github.com/KusakinDev/Catering-Menu-Service/internal/models/nutrition_fact_model"
 	tagmodel "github.com/KusakinDev/Catering-Menu-Service/internal/models/tag_model"
 	typemodel "github.com/KusakinDev/Catering-Menu-Service/internal/models/type_model"
@@ -114,6 +116,12 @@ func main() {
 
 	var typ typemodel.Type
 	typ.MigrateToDB(db)
+
+	var menu menumodel.Menu
+	menu.MigrateToDB(db)
+
+	var history historymodel.History
+	history.MigrateToDB(db)
 
 	db.CloseDB()
 

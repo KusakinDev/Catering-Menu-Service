@@ -1,14 +1,12 @@
-package createdish
+package updatedish
 
 import (
 	dishmodel "github.com/KusakinDev/Catering-Menu-Service/internal/models/dish_model"
 	nutritionfactmodel "github.com/KusakinDev/Catering-Menu-Service/internal/models/nutrition_fact_model"
 	"github.com/gin-gonic/gin"
-	"github.com/sirupsen/logrus"
 )
 
-func CreateDish(c *gin.Context) (int, string) {
-
+func UpdateDish(c *gin.Context) (int, string) {
 	var dish dishmodel.Dish
 	var nutFact nutritionfactmodel.NutritionFact
 	var err error
@@ -20,20 +18,16 @@ func CreateDish(c *gin.Context) (int, string) {
 	}
 
 	nutFact = dish.NutFuct
-
-	code = nutFact.AddToTable()
+	code = nutFact.UpdateInTable()
 	if code != 200 {
-		logrus.Println("Err add nutFact")
-		return code, "Error add to table"
+		return code, "Error update to table"
 	}
 
 	dish.NutFuct.Id = nutFact.Id
-
-	code = dish.AddToTable()
+	code = dish.UpdateInTable()
 	if code != 200 {
-		logrus.Println("Err add AddToTable")
-		return code, "Error add to table"
+		return code, "Error update dish"
 	}
 
-	return 200, "Success create new dish"
+	return code, "Success update dish"
 }

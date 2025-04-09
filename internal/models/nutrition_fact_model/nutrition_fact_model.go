@@ -1,8 +1,6 @@
 package nutritionfactmodel
 
 import (
-	"log"
-
 	"github.com/KusakinDev/Catering-Menu-Service/internal/database"
 	"github.com/gin-gonic/gin"
 	"github.com/sirupsen/logrus"
@@ -31,8 +29,22 @@ func (nutFact *NutritionFact) AddToTable() int {
 	err := db.Connection.Create(&nutFact).Error
 	if err != nil {
 		db.CloseDB()
-		log.Printf("Ошибка при добавлении nutFact: %v", err)
 		logrus.Error("Error add to table: ", err)
+		return 503
+	}
+
+	db.CloseDB()
+	return 200
+}
+
+func (nutFact *NutritionFact) UpdateInTable() int {
+	var db database.DataBase
+	db.InitDB()
+
+	err := db.Connection.Save(&nutFact).Error
+	if err != nil {
+		db.CloseDB()
+		logrus.Error("Error update in table: ", err)
 		return 503
 	}
 

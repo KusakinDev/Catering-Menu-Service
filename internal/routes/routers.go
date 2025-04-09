@@ -76,5 +76,35 @@ func getRoutes(handleFunctions ApiHandleFunctions) []Route {
 			"/CreateDish",
 			handleFunctions.DefaultAPI.CreateDishPost,
 		},
+		{
+			"UpdateDishPost",
+			http.MethodPost,
+			"/UpdateDish",
+			handleFunctions.DefaultAPI.UpdateDishPost,
+		},
+		{
+			"GetAllDishGet",
+			http.MethodGet,
+			"/GetAllDish",
+			handleFunctions.DefaultAPI.GetAllDishGet,
+		},
+		{
+			"CreateMenuPost",
+			http.MethodPost,
+			"/CreateMenu",
+			handleFunctions.DefaultAPI.CreateMenuPost,
+		},
+		{
+			"GetMenuGet",
+			http.MethodGet,
+			"/GetMenu",
+			handleFunctions.DefaultAPI.GetMenuGet,
+		},
+		{
+			"GetHistoryGet",
+			http.MethodGet,
+			"/GetHistory",
+			handleFunctions.DefaultAPI.GetHistoryGet,
+		},
 	}
 }

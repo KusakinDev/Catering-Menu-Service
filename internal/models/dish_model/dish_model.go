@@ -49,6 +49,21 @@ func (dish *Dish) AddToTable() int {
 	return 200
 }
 
+func (dish *Dish) UpdateInTable() int {
+	var db database.DataBase
+	db.InitDB()
+
+	err := db.Connection.Save(&dish).Error
+	if err != nil {
+		db.CloseDB()
+		logrus.Error("Error update in table: ", err)
+		return 503
+	}
+
+	db.CloseDB()
+	return 200
+}
+
 func (dish *Dish) GetFromTableById() int {
 	var db database.DataBase
 	db.InitDB()
@@ -61,6 +76,15 @@ func (dish *Dish) GetFromTableById() int {
 
 	db.CloseDB()
 	return 200
+}
+
+func (dish *Dish) IsInTable() bool {
+	var db database.DataBase
+	db.InitDB()
+	defer db.CloseDB()
+
+	err := db.Connection.First(&dish).Error
+	return err == nil
 }
 
 func (dish *Dish) GetAllFromTable() ([]Dish, int) {

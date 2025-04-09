@@ -11,6 +11,11 @@ package api
 
 import (
 	createdish "github.com/KusakinDev/Catering-Menu-Service/internal/handlers/create_dish"
+	createmenu "github.com/KusakinDev/Catering-Menu-Service/internal/handlers/create_menu"
+	getalldish "github.com/KusakinDev/Catering-Menu-Service/internal/handlers/get_all_dish"
+	gethistory "github.com/KusakinDev/Catering-Menu-Service/internal/handlers/get_history"
+	getmenu "github.com/KusakinDev/Catering-Menu-Service/internal/handlers/get_menu"
+	updatedish "github.com/KusakinDev/Catering-Menu-Service/internal/handlers/update_dish"
 	"github.com/gin-gonic/gin"
 )
 
@@ -24,4 +29,39 @@ func (api *DefaultAPI) CreateDishPost(c *gin.Context) {
 	code, message := createdish.CreateDish(c)
 
 	c.JSON(code, gin.H{"message": message})
+}
+
+func (api *DefaultAPI) UpdateDishPost(c *gin.Context) {
+
+	code, message := updatedish.UpdateDish(c)
+
+	c.JSON(code, gin.H{"message": message})
+}
+
+func (api *DefaultAPI) GetAllDishGet(c *gin.Context) {
+
+	code, allDish := getalldish.GetAllDish(c)
+
+	c.JSON(code, allDish)
+}
+
+func (api *DefaultAPI) CreateMenuPost(c *gin.Context) {
+
+	code, message := createmenu.CreateMenu(c)
+
+	c.JSON(code, gin.H{"message": message})
+}
+
+func (api *DefaultAPI) GetMenuGet(c *gin.Context) {
+
+	code, allMenu := getmenu.GetMenu(c)
+
+	c.JSON(code, allMenu)
+}
+
+func (api *DefaultAPI) GetHistoryGet(c *gin.Context) {
+
+	code, allHistory := gethistory.GetHistory(c)
+
+	c.JSON(code, allHistory)
 }
